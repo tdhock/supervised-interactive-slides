@@ -1,5 +1,6 @@
 \documentclass{beamer}
 
+\usepackage{ulem}
 \usepackage{listings}
 \usepackage{slashbox}
 \usepackage{tikz}
@@ -76,14 +77,20 @@ Cancer cell with many copy number alterations.
 \begin{frame}
   \frametitle{Unsupervised, non-interactive DNA copy number analysis}
 
-  \textbf{Usual solution:} fit a statistical model $f(\mathbf x, \theta)$.\\
+  \textbf{Unsupervised default model:} 
+  fit a breakpoint model $f(\mathbf x, \theta)$.\\
   ($\theta$ is a model parameter, for example a p-value threshold or
   the number of breakpoints)
 
   TODO: figure with data, parameters, model.
 
   \textbf{Problem}: how do we know the model $f$ and parameter
-  $\theta$ are reasonable? \textbf{Solution:} plot it!
+  $\theta$ are reasonable?
+
+  \vskip 0.1in
+
+  \textbf{Solution:} plot breakpoints $f(\mathbf x, \theta)$ and
+  interactively choose a reasonable parameter $\theta$.
 \end{frame}
 
 \begin{frame}
@@ -123,6 +130,40 @@ Cancer cell with many copy number alterations.
 \end{frame}
 
 \begin{frame}
+  \frametitle{A brief history of unsupervised DNA copy number analysis}
+  \begin{itemize}
+  \item GLAD: adaptive weights smoothing (Hup\'e \emph{et al.}, 2004)
+  \item DNAcopy: circular binary segmentation (Venkatraman and Olshen,
+    2007)
+  \item cghFLasso: fused lasso signal approximator with heuristics
+    (Tibshirani and Wang, 2007)
+  \item HaarSeg: wavelet smoothing (Ben-Yaacov and Eldar, 2008)
+  \item GADA: sparse Bayesian learning (Pique-Regi \emph{et al.}, 2008)
+  \item flsa: fused lasso signal approximator path algorithm (Hoefling 2009)
+  \item cghseg: pruned dynamic programming (Rigaill 2010)
+  \item PELT: pruned exact linear time (Killick \emph{et al.}, 2011)
+  \end{itemize}
+  Demo: \url{http://compbio.med.harvard.edu/CGHweb/}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Summary of unsupervised models}
+
+  \begin{tabular}{c|c|c|c}
+    Evaluation: & qualitative &  \\
+    Input: data + & parameters & & Plot/update?\\
+    \hline
+    &  &  & no\\
+    & default &  \\
+    & params & \\
+    \hline
+    & \textbf{tweaked} & \textbf{interactive} & yes\\
+    & params & edit regions
+  \end{tabular}
+
+\end{frame}
+
+\begin{frame}
   \frametitle{Unsupervised, interactive DNA copy number analysis\\
   with several profiles}
   \includegraphics[width=\textwidth]{unlabeled-breakpoints-8}
@@ -145,16 +186,27 @@ Cancer cell with many copy number alterations.
 
 \begin{frame}
   \frametitle{Some problems with unsupervised analysis}
+  \textbf{Training a model that works on many samples and genomic
+    regions?} 
   \begin{itemize}
-  \item How does the parameter for one profile $\theta_1$ help us
-    choose a parameter $\theta_2, \theta_3$ for other profiles?
-  \item What if we use a different model $g(\mathbf x, \rho)$ where
-    the learned $\theta$ is meaningless?
-  \item How to compare two models of the same data? Are the
-    breakpoints of $f(\mathbf x, \theta$) or $g(\mathbf x, \rho)$
-    better? 
+  \item What if we don't have time to look at all samples/regions and
+      interactively select a good parameter $\theta$ for each?
+  % \item \textbf{Generalization:} how does the parameter for one
+  %   profile $\theta_1$ help us choose a parameter $\theta_2, \theta_3$
+  %   for other profiles?
+  % \item \textbf{What if we use a different model $g(\mathbf x, \rho)$ where
+  %   the learned $\theta$ is meaningless?
+  \item Use default parameter $\theta$ for all profiles?
+  \item If we know a good parameter $\theta_1=8$ for one profile, how
+    does that help us choose a parameter $\theta_2, \theta_3$ for
+    other profiles?
   \end{itemize}
-
+  \textbf{Testing different models of the same data?} 
+    \begin{itemize}
+    \item   Are the breakpoints of $f(\mathbf x, \theta$) or
+  $g(\mathbf x, \rho)$ better?
+    \item Plot the data and both models, qualitative visual evaluation?
+    \end{itemize}
   All of these problems can be solved by supervised learning.
 \end{frame}
 
@@ -167,11 +219,39 @@ Cancer cell with many copy number alterations.
     \includegraphics[width=1.3in]{faces} &
     \includegraphics[width=1.3in]{cellprofiler} &
     \includegraphics[width=1.5in]{regions-axes}\\
-    Labels: names & phenotypes & alterations
+    Labels: faces, names & phenotypes & alterations \\
+    CVPR 2013 & CellProfiler & SegAnnDB \\
+    246 papers & 873 citations & H, \textit{et al.} 2014. \\
+     &
   \end{tabular}
   Sources: \url{http://en.wikipedia.org/wiki/Face_detection}\\
   Jones et al PNAS 2009. Scoring diverse cellular morphologies in
   image-based screens with iterative feedback and machine learning.
+\end{frame}
+
+\begin{frame}
+  \frametitle{Supervised, non-interactive DNA copy number analysis}
+
+  \includegraphics[width=\textwidth]{regions-axes-full}
+
+  Analyst sees a vector of $d$ noisy data points $\mathbf x\in\RR^d$,\\
+  and some manually annotated region labels $\mathbf y$.
+
+  \vskip 0.1in
+
+  \sout{\textbf{Question:}\\
+  where are the true changes in copy
+  number? (breakpoints)}
+  \\
+  ``All models are false, but some models are useful.''
+
+  \vskip 0.1in
+
+  \textbf{Train question:} can we find a model $f(\mathbf x, \theta)$
+  that fits the labels $\mathbf y$?
+  \\
+  \textbf{Test question:} can we find a model $f(\mathbf x^*, \theta)$
+  with good predictions on test data $\mathbf x^*$ and labels $\mathbf y^*$?
 \end{frame}
 
 \begin{frame}
@@ -219,6 +299,9 @@ Demo on \url{http://bioviz.rocq.inria.fr/}
     spreadsheets.
   \item[2013] Hocking et al. BMC Bioinformatics protocols for training
     \textbf{supervised} models.
+  \alert<2>{Visual annotations indicate that maximum likelihood
+    segmentation is the best (Hocking \emph{et al.}, BMC
+    Bioinformatics 2013).}
   \item[2014?] paper about SegAnnDB software for \textbf{interactive}
     genomic segmentation under review, Bioinformatics.
   \end{description}
@@ -266,7 +349,21 @@ Private server for McGill data sets:
 
 \section{Supervised ChIP-seq peak detection}
 
-
+\begin{frame}
+  \frametitle{A brief history of supervised ChIP-seq peak detection}
+  \begin{description}
+  \item[2011] Rye et al. Manually labeled sites and visual peaks for 3
+    transcription factors.\\
+    \textbf{Model evaluation.}
+  \item[2014] Hocking et al. arXiv:1409.6209. Manually labeled visual
+    peaks for 2 histone marks, 4 different annotators.
+    \\
+    \textbf{Single-parameter model training and evaluation.}\\
+    Hocking et al. PeakSeg. NIPS Computational Biology workshop.\\
+    \textbf{fo}
+  \item[2015] 
+  \end{description}
+\end{frame}
 
 \begin{frame}
   \frametitle{Thank you!}
