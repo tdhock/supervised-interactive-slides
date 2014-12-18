@@ -79,8 +79,8 @@ Cancer cell with many copy number alterations.
   \frametitle{Unsupervised, non-interactive DNA copy number analysis}
 
   \textbf{Unsupervised default model:} 
-  fit a breakpoint model $f(\mathbf x, \theta)$.\\
-  ($\theta$ is a model parameter, for example a p-value threshold or
+  fit a breakpoint model $f(\mathbf x, \lambda)$.\\
+  ($\lambda$ is a model parameter, for example a p-value threshold or
   the number of breakpoints)
 
   \begin{displaymath}
@@ -91,78 +91,63 @@ Cancer cell with many copy number alterations.
     \\
     % \text{Plot} \ar@{->}[d]
     & 
-    \text{Model $f(\mathbf x, \theta)$} 
+    \text{Model $f(\mathbf x, \lambda)$} 
     \\
     % \text{Labels $\mathbf y$}       \ar@{->}[d]
     \\
-    \text{Parameter $\theta$} 
+    \text{Parameter $\lambda$} 
     \ar `r[ruu] [ruu]
     & \text{ }
   }
   \end{displaymath}
   
   \textbf{Problem}: how do we know the model $f$ and parameter
-  $\theta$ are reasonable?
+  $\lambda$ are reasonable?
 
   \vskip 0.1in
 
-  \textbf{Solution:} plot breakpoints $f(\mathbf x, \theta)$ and
-  interactively choose a reasonable parameter $\theta$.
+  \textbf{Solution:} plot breakpoints $f(\mathbf x, \lambda)$ and
+  interactively choose a reasonable parameter $\lambda$.
 \end{frame}
 
 \begin{frame}
   \frametitle{Unsupervised, interactive DNA copy number analysis}
+  Analyst sees a vector of $d$ noisy data points $\mathbf x\in\RR^d$, \\
+  and the model breakpoints $f(\mathbf x, \lambda)$.
+
   \includegraphics[width=\textwidth]{unlabeled-breakpoints-6}
 
-  Parameter $\theta$ = 6 breakpoints.
+  Parameter $\lambda$ = 6 breakpoints.
 \end{frame}
 
 \begin{frame}
   \frametitle{Unsupervised, interactive DNA copy number analysis}
+  Analyst sees a vector of $d$ noisy data points $\mathbf x\in\RR^d$, \\
+  and the model breakpoints $f(\mathbf x, \lambda)$.
+
   \includegraphics[width=\textwidth]{unlabeled-breakpoints-7}
 
-  Parameter $\theta$ = 7 breakpoints.
+  Parameter $\lambda$ = 7 breakpoints.
 \end{frame}
 
 \begin{frame}
   \frametitle{Unsupervised, interactive DNA copy number analysis}
+  Analyst sees a vector of $d$ noisy data points $\mathbf x\in\RR^d$, \\
+  and the model breakpoints $f(\mathbf x, \lambda)$.
+
   \includegraphics[width=\textwidth]{unlabeled-breakpoints-8}
 
-  Parameter $\theta$ = 8 breakpoints.
+  Parameter $\lambda$ = 8 breakpoints.
 \end{frame}
 
 \begin{frame}
   \frametitle{Unsupervised, interactive DNA copy number analysis}
+  Analyst sees a vector of $d$ noisy data points $\mathbf x\in\RR^d$, \\
+  and the model breakpoints $f(\mathbf x, \lambda)$.
+
   \includegraphics[width=\textwidth]{unlabeled-breakpoints-9}
 
-  Parameter $\theta$ = 9 breakpoints.
-\end{frame}
-
-\begin{frame}
-  \frametitle{Unsupervised, interactive DNA copy number analysis}
-  
-  Choose $\theta$ by 
-
-  \begin{displaymath}
-  \xymatrix{
-    \text{Data $\mathbf x$}
-    \ar `[r] [dr] 
-    \ar [d]
-    & \text{ }
-    \\
-    \text{Plot} 
-    \ar [d]
-    & 
-    \text{Model $f(\mathbf x, \theta)$} 
-    \\
-    \text{Labels $\mathbf y$}       
-    \ar [d]
-    \\
-    \text{Parameter $\theta$} 
-    \ar `r[ruu] [ruu]
-    & \text{ }
-  }
-  \end{displaymath}
+  Parameter $\lambda$ = 9 breakpoints.
 \end{frame}
 
 \begin{frame}
@@ -183,21 +168,201 @@ Cancer cell with many copy number alterations.
 \end{frame}
 
 \begin{frame}
+  \frametitle{Unsupervised, interactive DNA copy number analysis}
+  
+  Non-interactive unsupervised default model.
+  
+  \small
+
+  \begin{displaymath}
+  \xymatrix{
+    \text{Data $\mathbf x$}
+    \ar `[r] [dr] 
+    %\ar `r[rr] [drr] 
+    %\ar `r[rrr] [drrr] 
+    %\ar [d]
+    & \text{ }
+    & \text{ }
+    & \text{ }
+    \\
+    %\text{Plot} 
+    %\ar [d]
+    & 
+    \text{Model $f(\mathbf x, \lambda_1)$} 
+    %\ar [r]
+    & 
+    \textcolor{white}{\text{Plot}}
+    %\ar[dd]
+    &
+    \color{white}{ \text{Model $f(\mathbf x, \lambda_2)$} }
+    \\
+    %\text{Labels $\mathbf y$}       
+    %\ar [d]
+    & 
+    &
+    \\
+    \text{Parameter $\lambda_1$} 
+    \ar `r[ruu] [ruu]
+    %\ar [rr]
+    & \text{ }
+    & \color{white}{ \text{Parameter $\lambda_2$} }
+    %\ar `r[ruu] [ruu] 
+  }
+  \end{displaymath}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Unsupervised, interactive DNA copy number analysis}
+
+  Plot the default model.
+  
+  \small
+
+  \begin{displaymath}
+  \xymatrix{
+    \text{Data $\mathbf x$}
+    \ar `[r] [dr] 
+    \ar `r[rr] [drr] 
+    %\ar `r[rrr] [drrr] 
+    %\ar [d]
+    & \text{ }
+    & \text{ }
+    & \text{ }
+    \\
+    %\text{Plot} 
+    %\ar [d]
+    & 
+    \text{Model $f(\mathbf x, \lambda_1)$} 
+    \ar [r]
+    & 
+    \text{Plot}
+    %\ar[dd]
+    &
+    \color{white}{ \text{Model $f(\mathbf x, \lambda_2)$} }
+    \\
+    %\text{Labels $\mathbf y$}       
+    %\ar [d]
+    & 
+    &
+    \\
+    \text{Parameter $\lambda_1$} 
+    \ar `r[ruu] [ruu]
+    %\ar [rr]
+    & \text{ }
+    & \color{white}{ \text{Parameter $\lambda_2$} }
+    %\ar `r[ruu] [ruu] 
+  }
+  \end{displaymath}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Unsupervised, interactive DNA copy number analysis}
+
+  Increase/decrease parameter based on signal/noise in plot.
+  
+  \small
+
+  \begin{displaymath}
+  \xymatrix{
+    \text{Data $\mathbf x$}
+    \ar `[r] [dr] 
+    \ar `r[rr] [drr] 
+    %\ar `r[rrr] [drrr] 
+    %\ar [d]
+    & \text{ }
+    & \text{ }
+    & \text{ }
+    \\
+    %\text{Plot} 
+    %\ar [d]
+    & 
+    \text{Model $f(\mathbf x, \lambda_1)$} 
+    \ar [r]
+    & 
+    \text{Plot}
+    \ar[dd]
+    &
+    \color{white}{ \text{Model $f(\mathbf x, \lambda_2)$} }
+    \\
+    %\text{Labels $\mathbf y$}       
+    %\ar [d]
+    & 
+    &
+    \\
+    \text{Parameter $\lambda_1$} 
+    \ar `r[ruu] [ruu]
+    \ar [rr]
+    & \text{ }
+    & \text{Parameter $\lambda_2$}
+    %\ar `r[ruu] [ruu] 
+  }
+  \end{displaymath}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Unsupervised, interactive DNA copy number analysis}
+
+  Fit model using new parameter.
+  
+  \small
+
+  \begin{displaymath}
+  \xymatrix{
+    \text{Data $\mathbf x$}
+    \ar `[r] [dr] 
+    \ar `r[rr] [drr] 
+    \ar `r[rrr] [drrr] 
+    %\ar [d]
+    & \text{ }
+    & \text{ }
+    & \text{ }
+    \\
+    %\text{Plot} 
+    %\ar [d]
+    & 
+    \text{Model $f(\mathbf x, \lambda_1)$} 
+    \ar [r]
+    & 
+    \text{Plot}
+    \ar[dd]
+    &
+    \text{Model $f(\mathbf x, \lambda_2)$} 
+    \\
+    %\text{Labels $\mathbf y$}       
+    %\ar [d]
+    & 
+    &
+    \\
+    \text{Parameter $\lambda_1$} 
+    \ar `r[ruu] [ruu]
+    \ar [rr]
+    & \text{ }
+    & \text{Parameter $\lambda_2$}
+    \ar `r[ruu] [ruu] 
+  }
+  \end{displaymath}
+\end{frame}
+
+\begin{frame}
   \frametitle{Summary of unsupervised models, software}
 
+  \begin{center}
   \begin{tabular}{c|c|c|c}
     Evaluation: & qualitative &  \\
     Input: data + & parameters & & \\
         & \textbf{unsupervised} & \\
     \hline
     \textbf{non-interactive}
-    & default params &  \\
+    & default parameters &  \\
     & e.g. DNAcopy & \\
     \hline
     \textbf{interactive}
-    & tuned params & \mbox{\hskip 1in} & \\
+    & tuned parameters & \mbox{\hskip 1in} & \\
     & e.g. CGHweb & 
   \end{tabular}
+  \end{center}
+
+  Works fine for 1 profile, but...
 
 \end{frame}
 
@@ -206,19 +371,19 @@ Cancer cell with many copy number alterations.
   with several profiles}
   \includegraphics[width=\textwidth]{unlabeled-breakpoints-8}
 
-  Parameter $\theta_1$ = 8 breakpoints.
+  Parameter $\lambda_1$ = 8 breakpoints.
 
   \vskip 0.1in
 
   \includegraphics[width=\textwidth]{lots-of-breaks}
 
-  Parameter $\theta_2$ = ??
+  Parameter $\lambda_2$ = ??
 
   \vskip 0.1in
 
   \includegraphics[width=\textwidth]{only-one-break}
 
-  Parameter $\theta_3$ = ??
+  Parameter $\lambda_3$ = ??
 
 \end{frame}
 
@@ -228,20 +393,20 @@ Cancer cell with many copy number alterations.
     regions?} 
   \begin{itemize}
   \item What if we don't have time to look at all samples/regions and
-      interactively select a good parameter $\theta$ for each?
+      interactively select a good parameter $\lambda$ for each?
   % \item \textbf{Generalization:} how does the parameter for one
-  %   profile $\theta_1$ help us choose a parameter $\theta_2, \theta_3$
+  %   profile $\lambda_1$ help us choose a parameter $\lambda_2, \lambda_3$
   %   for other profiles?
   % \item \textbf{What if we use a different model $g(\mathbf x, \rho)$ where
-  %   the learned $\theta$ is meaningless?
-  \item Use default parameter $\theta$ for all profiles?
-  \item If we know a good parameter $\theta_1=8$ for one profile, how
-    does that help us choose a parameter $\theta_2, \theta_3$ for
+  %   the learned $\lambda$ is meaningless?
+  \item Use default parameter $\lambda$ for all profiles?
+  \item If we know a good parameter $\lambda_1=8$ for one profile, how
+    does that help us choose a parameter $\lambda_2, \lambda_3$ for
     other profiles?
   \end{itemize}
   \textbf{Testing different models of the same data?} 
     \begin{itemize}
-    \item   Are the breakpoints of $f(\mathbf x, \theta$) or
+    \item   Are the breakpoints of $f(\mathbf x, \lambda$) or
   $g(\mathbf x, \rho)$ better?
     \item Plot the data and both models, qualitative visual evaluation?
     \end{itemize}
@@ -268,32 +433,8 @@ Cancer cell with many copy number alterations.
 \end{frame}
 
 \begin{frame}
-  \frametitle{Supervised, non-interactive DNA copy number analysis}
-
-  \includegraphics[width=\textwidth]{regions-axes-full}
-
-  Analyst sees a vector of $d$ noisy data points $\mathbf x\in\RR^d$,\\
-  and some manually annotated region labels $\mathbf y$.
-
-  \vskip 0.1in
-
-  \sout{\textbf{Question:}\\
-  where are the true changes in copy
-  number? (breakpoints)}
-  \\
-  ``All models are false, but some models are useful.''
-
-  \vskip 0.1in
-
-  \textbf{Train question:} can we find a model $f(\mathbf x, \theta)$
-  that fits the labels $\mathbf y$?
-  \\
-  \textbf{Test question:} can we find a model $f(\mathbf x^*, \theta)$
-  with good predictions on test data $\mathbf x^*$ and labels $\mathbf y^*$?
-\end{frame}
-
-\begin{frame}
   \frametitle{Computer vision for genomic segmentation}
+  \begin{center}
   \begin{tabular}{rll}
     \textbf{Breakpoint}\\
  \textbf{detector} & \textbf{strong point} & \textbf{weak point} \\
@@ -305,19 +446,77 @@ Cancer cell with many copy number alterations.
     your eyes & outliers, signal/noise & finding the \\
     & over large regions &  exact breakpoint
   \end{tabular}
-\vskip 1cm
-\textbf{SegAnnDB exploits the strong points of both:}
-\begin{itemize}
-\item Plot a maximum likelihood model alongside the data.
-\item Edit annotated regions.
-\item The model parameters are automatically updated to agree.
-\item No tuning parameters, but need to annotate a few profiles.
-\end{itemize}
-Demo on \url{http://bioviz.rocq.inria.fr/}
+  \end{center}
+  % \vskip 1cm
+  % \textbf{SegAnnDB exploits the strong points of both:}
+  % \begin{itemize}
+  % \item Plot a maximum likelihood model alongside the data.
+  % \item Edit annotated regions.
+  % \item The model parameters are automatically updated to agree.
+  % \item No tuning parameters, but need to annotate a few profiles.
+  % \end{itemize}
+  % Demo on \url{http://bioviz.rocq.inria.fr/}
+
+  Discussion of common objections:
+  \begin{itemize}
+  \item \textbf{Isn't this totally subjective?} Yes, guilty as
+    charged. \\
+    But so is everything else we do, including choice of
+    model $f$ and parameter $\lambda$.
+  \item \textbf{Won't the results change based on the annotator?}
+    Possibly, but usually annotators agree.
+  \end{itemize}
+\end{frame}
+
+
+
+\begin{frame}
+  \frametitle{Supervised, non-interactive DNA copy number analysis}
+
+  \includegraphics[width=\textwidth]{regions-axes-full}
+
+  Analyst sees a vector of $d$ noisy data points $\mathbf x\in\RR^d$,\\
+  and some manually annotated region labels $\mathbf y$.
+
+  \vskip 0.1in
+
+  \sout{\textbf{Question:}\\
+    where are the true changes in copy number? (breakpoints)}
+  \\
+  ``All models are wrong, but some are useful.'' page 424, \textit{Empirical
+    Model-Building and Response Surfaces}, Box and Draper (1987).
+
+  \vskip 0.1in
+
+  \textbf{Train question:} can we fit a model $f(\mathbf x, \lambda)$
+  to the labels $\mathbf y?$
+  \\
+  \textbf{Test question:} does the fitted model $f(\mathbf x^*, \lambda)$
+  have good predictions for test data $\mathbf x^*$ and labels $\mathbf y^*$?
 \end{frame}
 
 \begin{frame}
-  \frametitle{Supervised, non-interactive genomic segmentation}
+  \frametitle{Supervised training of breakpoint detection model}
+
+  Reference: Hocking \textit{et al.} Learning smoothing models of copy
+  number profiles using breakpoint annotations, BMC Bioinfo
+  (2013).
+
+  \includegraphics[width=0.8\textwidth]{bams-smoothing}
+
+  \begin{equation*}
+    \hat \lambda = \argmin_{\lambda}
+    \sum_{i=1}^n
+    E\left[
+      \mathbf y_i,
+      f(\mathbf x_i, \lambda)
+    \right]
+  \end{equation*}
+
+\end{frame}
+
+\begin{frame}
+  \frametitle{Supervised, non-interactive DNA copy number analysis}
   \begin{displaymath}
   \xymatrix{
     \text{Data $\mathbf x$}
@@ -328,16 +527,55 @@ Demo on \url{http://bioviz.rocq.inria.fr/}
     \text{Plot} 
     \ar [d]
     & 
-    \text{Model $f(\mathbf x, \theta)$} 
+    \text{Model $f(\mathbf x, \lambda)$} 
     \\
     \text{Labels $\mathbf y$}       
     \ar [d]
     \\
-    \text{Parameter $\theta$} 
+    \text{Parameter $\lambda$} 
     \ar `r[ruu] [ruu]
     & \text{ }
   }
   \end{displaymath}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Supervised, non-interactive DNA copy number analysis}
+  \begin{displaymath}
+  \xymatrix{
+    \text{Data $\mathbf x$}
+    \ar `[r] [dr] 
+    \ar [d]
+    & \text{ }
+    \\
+    \text{Plot} 
+    \ar [d]
+    & 
+    \text{Model $f(\mathbf x, \lambda)$} 
+    \\
+    \text{Labels $\mathbf y$}       
+    \ar [d]
+    \\
+    \text{Parameter $\lambda$} 
+    \ar `r[ruu] [ruu]
+    & \text{ }
+  }
+  \end{displaymath}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Supervised, interactive copy number analysis (SegAnnDB)}
+
+\includegraphics[width=\textwidth]{new-new-annotations}
+
+\vskip 0.2in
+Public SegAnnDB server: \url{http://bioviz.rocq.inria.fr/}
+
+\vskip 0.1in
+Private server for McGill data sets:
+\small
+\url{http://ec2-54-201-171-12.us-west-2.compute.amazonaws.com/}
+
 \end{frame}
 
 \begin{frame}
@@ -357,13 +595,13 @@ Demo on \url{http://bioviz.rocq.inria.fr/}
     \text{Plot 1} 
     \ar [d]
     & 
-    \text{Model $f(\mathbf x, \theta_1)$} 
+    \text{Model $f(\mathbf x, \lambda_1)$} 
     %\ar [r]
     &
     \color{white}{\text{Plot 2} }
     %\ar [d]
     & 
-    \color{white}{\text{Model $f(\mathbf x, \theta_2)$} }
+    \color{white}{\text{Model $f(\mathbf x, \lambda_2)$} }
     \\
     \text{Labels $\mathbf y_1$}       
     \ar [d]
@@ -374,11 +612,11 @@ Demo on \url{http://bioviz.rocq.inria.fr/}
     \color{white}{\text{Labels $\mathbf y_2$}}
     %\ar [d]
     \\
-    \text{Parameter $\theta_1$} 
+    \text{Parameter $\lambda_1$} 
     \ar `r[ruu] [ruu]
     & \text{ }
     & 
-    \color{white}{\text{Parameter $\theta_2$}}
+    \color{white}{\text{Parameter $\lambda_2$}}
     %\ar `r[ruu] [ruu]
   }
   \end{displaymath}
@@ -401,13 +639,13 @@ Demo on \url{http://bioviz.rocq.inria.fr/}
     \text{Plot 1} 
     \ar [d]
     & 
-    \text{Model $f(\mathbf x, \theta_1)$} 
+    \text{Model $f(\mathbf x, \lambda_1)$} 
     \ar [r]
     &
     \text{Plot 2} 
     %\ar [d]
     & 
-    \color{white}{\text{Model $f(\mathbf x, \theta_2)$} }
+    \color{white}{\text{Model $f(\mathbf x, \lambda_2)$} }
     \\
     \text{Labels $\mathbf y_1$}       
     \ar [d]
@@ -418,11 +656,11 @@ Demo on \url{http://bioviz.rocq.inria.fr/}
     \color{white}{\text{Labels $\mathbf y_2$}}
     %\ar [d]
     \\
-    \text{Parameter $\theta_1$} 
+    \text{Parameter $\lambda_1$} 
     \ar `r[ruu] [ruu]
     & \text{ }
     & 
-    \color{white}{\text{Parameter $\theta_2$}}
+    \color{white}{\text{Parameter $\lambda_2$}}
     %\ar `r[ruu] [ruu]
   }
   \end{displaymath}
@@ -445,13 +683,13 @@ Demo on \url{http://bioviz.rocq.inria.fr/}
     \text{Plot 1} 
     \ar [d]
     & 
-    \text{Model $f(\mathbf x, \theta_1)$} 
+    \text{Model $f(\mathbf x, \lambda_1)$} 
     \ar [r]
     &
     \text{Plot 2} 
     \ar [d]
     & 
-    \color{white}{\text{Model $f(\mathbf x, \theta_2)$} }
+    \color{white}{\text{Model $f(\mathbf x, \lambda_2)$} }
     \\
     \text{Labels $\mathbf y_1$}       
     \ar [d]
@@ -462,11 +700,11 @@ Demo on \url{http://bioviz.rocq.inria.fr/}
     \text{Labels $\mathbf y_2$}
     %\ar [d]
     \\
-    \text{Parameter $\theta_1$} 
+    \text{Parameter $\lambda_1$} 
     \ar `r[ruu] [ruu]
     & \text{ }
     & 
-    \color{white}{\text{Parameter $\theta_2$}}
+    \color{white}{\text{Parameter $\lambda_2$}}
     %\ar `r[ruu] [ruu]
   }
   \end{displaymath}
@@ -489,13 +727,13 @@ Demo on \url{http://bioviz.rocq.inria.fr/}
     \text{Plot 1} 
     \ar [d]
     & 
-    \text{Model $f(\mathbf x, \theta_1)$} 
+    \text{Model $f(\mathbf x, \lambda_1)$} 
     \ar [r]
     &
     \text{Plot 2} 
     \ar [d]
     & 
-    \color{white}{\text{Model $f(\mathbf x, \theta_2)$} }
+    \color{white}{\text{Model $f(\mathbf x, \lambda_2)$} }
     \\
     \text{Labels $\mathbf y_1$}       
     \ar [d]
@@ -506,10 +744,10 @@ Demo on \url{http://bioviz.rocq.inria.fr/}
     \text{Labels $\mathbf y_2$}
     \ar [d]
     \\
-    \text{Parameter $\theta_1$} 
+    \text{Parameter $\lambda_1$} 
     \ar `r[ruu] [ruu]
     & \text{ }
-    & \text{Parameter $\theta_2$}
+    & \text{Parameter $\lambda_2$}
     %\ar `r[ruu] [ruu]
   }
   \end{displaymath}
@@ -533,13 +771,13 @@ Demo on \url{http://bioviz.rocq.inria.fr/}
     \text{Plot 1} 
     \ar [d]
     & 
-    \text{Model $f(\mathbf x, \theta_1)$} 
+    \text{Model $f(\mathbf x, \lambda_1)$} 
     \ar [r]
     &
     \text{Plot 2} 
     \ar [d]
     & 
-    \text{Model $f(\mathbf x, \theta_2)$} 
+    \text{Model $f(\mathbf x, \lambda_2)$} 
     \\
     \text{Labels $\mathbf y_1$}       
     \ar [d]
@@ -550,10 +788,10 @@ Demo on \url{http://bioviz.rocq.inria.fr/}
     \text{Labels $\mathbf y_2$}
     \ar [d]
     \\
-    \text{Parameter $\theta_1$} 
+    \text{Parameter $\lambda_1$} 
     \ar `r[ruu] [ruu]
     & \text{ }
-    & \text{Parameter $\theta_2$}
+    & \text{Parameter $\lambda_2$}
     \ar `r[ruu] [ruu]
   }
   \end{displaymath}
@@ -588,46 +826,6 @@ Demo on \url{http://bioviz.rocq.inria.fr/}
   \end{description}
 \end{frame}
 
-\begin{frame}
-  \frametitle{Supervised, interactive copy number analysis (SegAnnDB)}
-
-\includegraphics[width=\textwidth]{new-new-annotations}
-
-\vskip 0.2in
-Public SegAnnDB server: \url{http://bioviz.rocq.inria.fr/}
-
-\vskip 0.1in
-Private server for McGill data sets:
-\small
-\url{http://ec2-54-201-171-12.us-west-2.compute.amazonaws.com/}
-
-\end{frame}
-
-\begin{frame} 
-  \frametitle{Advantages of supervised learning}
-  Creating annotation databases is important for
-  \begin{description}
-  \item[short-term] quantitative evaluation, more convincing papers.
-  \item[long-term] cross-discipline collaboration!
-    \begin{description}
-    \item[statisticians/modelers] get better evaluation
-    metrics.
-    \item[biologists/annotators] get
-    better models.
-    \end{description}
-  \end{description}
-  TODO: all models are false, but some models are useful.
-
-  Can we make labels/supervised approaches for...
-  \begin{description}
-  \item[segmentation] breakpoint/copy number regions (this work).
-  \item[clustering] pairs that should join (or not)?
-  \item[regression] variables/genes that are important (or not)?
-  \item[diff expression] genes that are up/down (or not)?
-  \end{description}
-  Write me at \texttt{toby.hocking@mail.mcgill.ca} to collaborate!
-\end{frame}
-
 \section{Supervised ChIP-seq peak detection}
 
 \begin{frame}
@@ -647,8 +845,44 @@ Private server for McGill data sets:
 \end{frame}
 
 \begin{frame}
+  \frametitle{Two annotators agree on the same profile}
+  
+  \includegraphics[width=\textwidth]{figure-several-annotators}
+\end{frame}
+
+\begin{frame} 
+  \frametitle{Advantages of supervised learning}
+  Creating data sets $\mathbf x$ with labels $\mathbf y$ is important for
+  \begin{description}
+  \item[short-term] quantitative evaluation, more convincing papers.
+  \item[long-term] cross-discipline collaboration!
+    \begin{description}
+    \item[statisticians/modelers] get better evaluation
+    metrics.
+    \item[biologists/annotators] get
+    better models.
+    \end{description}
+  \end{description}
+
+  Can we make labels/supervised approaches for...
+  \begin{description}
+  \item[segmentation] breakpoint/copy number regions (this work).
+  \item[clustering] pairs that should join (or not)?
+  \item[regression] variables/genes that are important (or not)?
+  \item[diff expression] genes that are up/down (or not)?
+  \end{description}
+  Write me at \texttt{toby.hocking@mail.mcgill.ca} to collaborate!
+\end{frame}
+
+\begin{frame}
   \frametitle{Thank you!}
   Supplementary slides appear after this one.
+
+  \vskip 1cm
+
+  Source code for slides online!\\
+  \small
+  \url{https://github.com/tdhock/supervised-interactive-slides}
 \end{frame}
 
 \end{document}
