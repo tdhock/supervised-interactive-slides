@@ -1,9 +1,10 @@
 \documentclass{beamer}
-
+\usepackage{etex} % to avoid errors http://tex.stackexchange.com/questions/7896/no-room-for-a-new-dimen-when-including-tikz
 \usepackage{ulem}
 \usepackage{listings}
 \usepackage{slashbox}
 \usepackage{tikz}
+\usepackage[all]{xy}
 \usepackage{booktabs}
 \usepackage{amsmath,amssymb}
 \usepackage{hyperref}
@@ -46,7 +47,7 @@ Toby Dylan Hocking
 \begin{frame}
   \frametitle{DNA copy number analysis}
 
-  Figure source: Alberts \emph{et al.} 2002. Molecular Biology of the Cell.
+  Figure source: Alberts \textit{et al.} 2002. Molecular Biology of the Cell.
 \vskip 0.1in
   \includegraphics[width=\textwidth]{Karyo-both}
 \vskip 0.1in
@@ -82,8 +83,24 @@ Cancer cell with many copy number alterations.
   ($\theta$ is a model parameter, for example a p-value threshold or
   the number of breakpoints)
 
-  TODO: figure with data, parameters, model.
-
+  \begin{displaymath}
+  \xymatrix{
+    \text{Data $\mathbf x$}
+    \ar `[r] [dr] 
+    & \text{ }
+    \\
+    % \text{Plot} \ar@{->}[d]
+    & 
+    \text{Model $f(\mathbf x, \theta)$} 
+    \\
+    % \text{Labels $\mathbf y$}       \ar@{->}[d]
+    \\
+    \text{Parameter $\theta$} 
+    \ar `r[ruu] [ruu]
+    & \text{ }
+  }
+  \end{displaymath}
+  
   \textbf{Problem}: how do we know the model $f$ and parameter
   $\theta$ are reasonable?
 
@@ -126,39 +143,60 @@ Cancer cell with many copy number alterations.
   
   Choose $\theta$ by 
 
-  TODO: figure with data, parameters, model, plot.
+  \begin{displaymath}
+  \xymatrix{
+    \text{Data $\mathbf x$}
+    \ar `[r] [dr] 
+    \ar [d]
+    & \text{ }
+    \\
+    \text{Plot} 
+    \ar [d]
+    & 
+    \text{Model $f(\mathbf x, \theta)$} 
+    \\
+    \text{Labels $\mathbf y$}       
+    \ar [d]
+    \\
+    \text{Parameter $\theta$} 
+    \ar `r[ruu] [ruu]
+    & \text{ }
+  }
+  \end{displaymath}
 \end{frame}
 
 \begin{frame}
   \frametitle{A brief history of unsupervised DNA copy number analysis}
   \begin{itemize}
-  \item GLAD: adaptive weights smoothing (Hup\'e \emph{et al.}, 2004)
+  \item GLAD: adaptive weights smoothing (Hup\'e \textit{et al.}, 2004)
   \item DNAcopy: circular binary segmentation (Venkatraman and Olshen,
     2007)
   \item cghFLasso: fused lasso signal approximator with heuristics
     (Tibshirani and Wang, 2007)
   \item HaarSeg: wavelet smoothing (Ben-Yaacov and Eldar, 2008)
-  \item GADA: sparse Bayesian learning (Pique-Regi \emph{et al.}, 2008)
+  \item GADA: sparse Bayesian learning (Pique-Regi \textit{et al.}, 2008)
   \item flsa: fused lasso signal approximator path algorithm (Hoefling 2009)
   \item cghseg: pruned dynamic programming (Rigaill 2010)
-  \item PELT: pruned exact linear time (Killick \emph{et al.}, 2011)
+  \item PELT: pruned exact linear time (Killick \textit{et al.}, 2011)
   \end{itemize}
   Demo: \url{http://compbio.med.harvard.edu/CGHweb/}
 \end{frame}
 
 \begin{frame}
-  \frametitle{Summary of unsupervised models}
+  \frametitle{Summary of unsupervised models, software}
 
   \begin{tabular}{c|c|c|c}
     Evaluation: & qualitative &  \\
-    Input: data + & parameters & & Plot/update?\\
+    Input: data + & parameters & & \\
+        & \textbf{unsupervised} & \\
     \hline
-    &  &  & no\\
-    & default &  \\
-    & params & \\
+    \textbf{non-interactive}
+    & default params &  \\
+    & e.g. DNAcopy & \\
     \hline
-    & \textbf{tweaked} & \textbf{interactive} & yes\\
-    & params & edit regions
+    \textbf{interactive}
+    & tuned params & \mbox{\hskip 1in} & \\
+    & e.g. CGHweb & 
   \end{tabular}
 
 \end{frame}
@@ -279,6 +317,249 @@ Demo on \url{http://bioviz.rocq.inria.fr/}
 \end{frame}
 
 \begin{frame}
+  \frametitle{Supervised, non-interactive genomic segmentation}
+  \begin{displaymath}
+  \xymatrix{
+    \text{Data $\mathbf x$}
+    \ar `[r] [dr] 
+    \ar [d]
+    & \text{ }
+    \\
+    \text{Plot} 
+    \ar [d]
+    & 
+    \text{Model $f(\mathbf x, \theta)$} 
+    \\
+    \text{Labels $\mathbf y$}       
+    \ar [d]
+    \\
+    \text{Parameter $\theta$} 
+    \ar `r[ruu] [ruu]
+    & \text{ }
+  }
+  \end{displaymath}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Supervised, interactive genomic segmentation}
+  \small
+  \begin{displaymath}
+  \xymatrix{
+    \text{Data $\mathbf x$}
+    \ar `[r] [dr] 
+    %\ar `r[rr] [drr] 
+    %\ar `r[rrr] [drrr] 
+    \ar [d]
+    & \text{ }
+    & \text{ }
+    & \text{ }
+    \\
+    \text{Plot 1} 
+    \ar [d]
+    & 
+    \text{Model $f(\mathbf x, \theta_1)$} 
+    %\ar [r]
+    &
+    \color{white}{\text{Plot 2} }
+    %\ar [d]
+    & 
+    \color{white}{\text{Model $f(\mathbf x, \theta_2)$} }
+    \\
+    \text{Labels $\mathbf y_1$}       
+    \ar [d]
+    %\ar [rr]
+    %\ar [rru]
+    &
+    &
+    \color{white}{\text{Labels $\mathbf y_2$}}
+    %\ar [d]
+    \\
+    \text{Parameter $\theta_1$} 
+    \ar `r[ruu] [ruu]
+    & \text{ }
+    & 
+    \color{white}{\text{Parameter $\theta_2$}}
+    %\ar `r[ruu] [ruu]
+  }
+  \end{displaymath}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Supervised, interactive genomic segmentation}
+  \small
+  \begin{displaymath}
+  \xymatrix{
+    \text{Data $\mathbf x$}
+    \ar `[r] [dr] 
+    \ar `r[rr] [drr] 
+    %\ar `r[rrr] [drrr] 
+    \ar [d]
+    & \text{ }
+    & \text{ }
+    & \text{ }
+    \\
+    \text{Plot 1} 
+    \ar [d]
+    & 
+    \text{Model $f(\mathbf x, \theta_1)$} 
+    \ar [r]
+    &
+    \text{Plot 2} 
+    %\ar [d]
+    & 
+    \color{white}{\text{Model $f(\mathbf x, \theta_2)$} }
+    \\
+    \text{Labels $\mathbf y_1$}       
+    \ar [d]
+    %\ar [rr]
+    \ar [rru]
+    &
+    &
+    \color{white}{\text{Labels $\mathbf y_2$}}
+    %\ar [d]
+    \\
+    \text{Parameter $\theta_1$} 
+    \ar `r[ruu] [ruu]
+    & \text{ }
+    & 
+    \color{white}{\text{Parameter $\theta_2$}}
+    %\ar `r[ruu] [ruu]
+  }
+  \end{displaymath}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Supervised, interactive genomic segmentation}
+  \small
+  \begin{displaymath}
+  \xymatrix{
+    \text{Data $\mathbf x$}
+    \ar `[r] [dr] 
+    \ar `r[rr] [drr] 
+    %\ar `r[rrr] [drrr] 
+    \ar [d]
+    & \text{ }
+    & \text{ }
+    & \text{ }
+    \\
+    \text{Plot 1} 
+    \ar [d]
+    & 
+    \text{Model $f(\mathbf x, \theta_1)$} 
+    \ar [r]
+    &
+    \text{Plot 2} 
+    \ar [d]
+    & 
+    \color{white}{\text{Model $f(\mathbf x, \theta_2)$} }
+    \\
+    \text{Labels $\mathbf y_1$}       
+    \ar [d]
+    \ar [rr]
+    \ar [rru]
+    &
+    &
+    \text{Labels $\mathbf y_2$}
+    %\ar [d]
+    \\
+    \text{Parameter $\theta_1$} 
+    \ar `r[ruu] [ruu]
+    & \text{ }
+    & 
+    \color{white}{\text{Parameter $\theta_2$}}
+    %\ar `r[ruu] [ruu]
+  }
+  \end{displaymath}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Supervised, interactive genomic segmentation}
+  \small
+  \begin{displaymath}
+  \xymatrix{
+    \text{Data $\mathbf x$}
+    \ar `[r] [dr] 
+    \ar `r[rr] [drr] 
+    %\ar `r[rrr] [drrr] 
+    \ar [d]
+    & \text{ }
+    & \text{ }
+    & \text{ }
+    \\
+    \text{Plot 1} 
+    \ar [d]
+    & 
+    \text{Model $f(\mathbf x, \theta_1)$} 
+    \ar [r]
+    &
+    \text{Plot 2} 
+    \ar [d]
+    & 
+    \color{white}{\text{Model $f(\mathbf x, \theta_2)$} }
+    \\
+    \text{Labels $\mathbf y_1$}       
+    \ar [d]
+    \ar [rr]
+    \ar [rru]
+    &
+    &
+    \text{Labels $\mathbf y_2$}
+    \ar [d]
+    \\
+    \text{Parameter $\theta_1$} 
+    \ar `r[ruu] [ruu]
+    & \text{ }
+    & \text{Parameter $\theta_2$}
+    %\ar `r[ruu] [ruu]
+  }
+  \end{displaymath}
+\end{frame}
+
+
+\begin{frame}
+  \frametitle{Supervised, interactive genomic segmentation}
+  \small
+  \begin{displaymath}
+  \xymatrix{
+    \text{Data $\mathbf x$}
+    \ar `[r] [dr] 
+    \ar `r[rr] [drr] 
+    \ar `r[rrr] [drrr] 
+    \ar [d]
+    & \text{ }
+    & \text{ }
+    & \text{ }
+    \\
+    \text{Plot 1} 
+    \ar [d]
+    & 
+    \text{Model $f(\mathbf x, \theta_1)$} 
+    \ar [r]
+    &
+    \text{Plot 2} 
+    \ar [d]
+    & 
+    \text{Model $f(\mathbf x, \theta_2)$} 
+    \\
+    \text{Labels $\mathbf y_1$}       
+    \ar [d]
+    \ar [rr]
+    \ar [rru]
+    &
+    &
+    \text{Labels $\mathbf y_2$}
+    \ar [d]
+    \\
+    \text{Parameter $\theta_1$} 
+    \ar `r[ruu] [ruu]
+    & \text{ }
+    & \text{Parameter $\theta_2$}
+    \ar `r[ruu] [ruu]
+  }
+  \end{displaymath}
+\end{frame}
+
+\begin{frame}
   \frametitle{Annotated regions allow supervised and interactive models}
   \begin{tabular}{c|c|c|c}
     Evaluation: & qualitative & quantitative \\
@@ -300,7 +581,7 @@ Demo on \url{http://bioviz.rocq.inria.fr/}
   \item[2013] Hocking et al. BMC Bioinformatics protocols for training
     \textbf{supervised} models.
   \alert<2>{Visual annotations indicate that maximum likelihood
-    segmentation is the best (Hocking \emph{et al.}, BMC
+    segmentation is the best (Hocking \textit{et al.}, BMC
     Bioinformatics 2013).}
   \item[2014?] paper about SegAnnDB software for \textbf{interactive}
     genomic segmentation under review, Bioinformatics.
