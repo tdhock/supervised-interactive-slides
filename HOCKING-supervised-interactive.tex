@@ -468,8 +468,6 @@ Cancer cell with many copy number alterations.
   \end{itemize}
 \end{frame}
 
-
-
 \begin{frame}
   \frametitle{Supervised, non-interactive DNA copy number analysis}
 
@@ -504,33 +502,59 @@ Cancer cell with many copy number alterations.
 
   \includegraphics[width=0.8\textwidth]{bams-smoothing}
 
+  Find the best parameter $\lambda$ for $n=6$ profiles $\mathbf x_i$
+  with labels $\mathbf y_i$:
+
   \begin{equation*}
     \hat \lambda = \argmin_{\lambda}
     \sum_{i=1}^n
     E\left[
       \mathbf y_i,
       f(\mathbf x_i, \lambda)
-    \right]
+    \right].
   \end{equation*}
 
 \end{frame}
 
+
+\begin{frame}
+  \frametitle{Ranking breakpoint detectors by test error}
+
+  Benchmark data set: two different manual annotation/label sets
+  $\mathbf y_i$ for profiles~$\mathbf x_i$ from 575 neuroblastoma
+  patients\\
+  (R package \texttt{neuroblastoma}).
+
+  \begin{center}
+      \includegraphics[width=0.8\textwidth]{bams-test-error}
+  \end{center}
+
+  Local model = choose best $\lambda_i$ for each profile $i$.\\
+  Global model = choose best $\lambda$ overall.
+
+\end{frame}
+
+\begin{frame}
+  \frametitle{MMIR}
+  TODO
+\end{frame}
+
 \begin{frame}
   \frametitle{Supervised, non-interactive DNA copy number analysis}
   \begin{displaymath}
   \xymatrix{
     \text{Data $\mathbf x$}
     \ar `[r] [dr] 
-    \ar [d]
+    %\ar [d]
     & \text{ }
     \\
-    \text{Plot} 
-    \ar [d]
+    \color{white}{\text{Plot} }
+    %\ar [d]
     & 
     \text{Model $f(\mathbf x, \lambda)$} 
     \\
-    \text{Labels $\mathbf y$}       
-    \ar [d]
+    \color{white}{\text{Labels $\mathbf y$}       }
+    %\ar [d]
     \\
     \text{Parameter $\lambda$} 
     \ar `r[ruu] [ruu]
@@ -564,10 +588,35 @@ Cancer cell with many copy number alterations.
 \end{frame}
 
 \begin{frame}
-  \frametitle{Supervised, interactive copy number analysis (SegAnnDB)}
+  \frametitle{Some problems solved by supervised analysis}
+  \textbf{Training a model that works on many samples and genomic
+    regions?} 
+  \begin{itemize}
+  \item Quantitative model training using labels $\mathbf y_i$:
+  \begin{equation*}
+    \hat \lambda = \argmin_{\lambda}
+    \sum_{i=1}^n
+    E\left[
+      \mathbf y_i,
+      f(\mathbf x_i, \lambda)
+    \right].
+  \end{equation*}
+  \end{itemize}
+  \textbf{Testing different models of the same data?} 
+  \begin{itemize}
+  \item Quantitative model evaluation using labels $\mathbf y_i$.
+  \end{itemize}
+  But where do the labels $\mathbf y_i$ come from?
+\end{frame}
 
+\begin{frame}
+  \frametitle{Supervised, interactive copy number analysis}
+
+  SegAnnDB: interactive web-based genomic segmentation\\
+  (Hocking et al. Bioinformatics 2014).
+  \begin{center}
 \includegraphics[width=\textwidth]{new-new-annotations}
-
+  \end{center}
 \vskip 0.2in
 Public SegAnnDB server: \url{http://bioviz.rocq.inria.fr/}
 
@@ -576,6 +625,11 @@ Private server for McGill data sets:
 \small
 \url{http://ec2-54-201-171-12.us-west-2.compute.amazonaws.com/}
 
+\end{frame}
+
+\begin{frame}
+  \frametitle{error decreases as profiles are labeled}
+  TODO add fig
 \end{frame}
 
 \begin{frame}
@@ -798,31 +852,30 @@ Private server for McGill data sets:
 \end{frame}
 
 \begin{frame}
-  \frametitle{Annotated regions allow supervised and interactive models}
-  \begin{tabular}{c|c|c|c}
+  \frametitle{A brief history of supervised DNA copy number analysis}
+  \begin{center}
+      \begin{tabular}{c|c|c|c}
     Evaluation: & qualitative & quantitative \\
-    Input: data + & parameters & annotated regions & Plot/update?\\
+    Input: data + & parameters & annotated regions \\
+    & \textbf{unsupervised} & \textbf{supervised} \\
     \hline
-    & \textbf{unsupervised} & \textbf{supervised} & no\\
-    & default & params chosen to \\
-    & params & agree w/regions\\
+ \textbf{non-interactive}    & default parameters & &\\
+    & e.g. DNAcopy & MMIR \\
     \hline
-    & \textbf{tweaked} & \textbf{interactive} & yes\\
-    & params & edit regions
+ \textbf{interactive}    & tuned parameters &  \\
+    & e.g. CGHweb & SegAnnDB
   \end{tabular}
+  \end{center}
   \begin{description}
-  \item[2004-now] dozens of \textbf{unsupervised} models that can be
-    \textbf{tweaked} e.g. GLAD, DNAcopy, fused lasso, cghseg, PELT.
-  \item[2009-2010] Janoueix-Lerosey, Schleiermacher, et al. J Clinical
-    Oncology. Breakpoint region labels recorded by typing 0/1 in Excel
-    spreadsheets.
-  \item[2013] Hocking et al. BMC Bioinformatics protocols for training
-    \textbf{supervised} models.
-  \alert<2>{Visual annotations indicate that maximum likelihood
-    segmentation is the best (Hocking \textit{et al.}, BMC
-    Bioinformatics 2013).}
-  \item[2014?] paper about SegAnnDB software for \textbf{interactive}
-    genomic segmentation under review, Bioinformatics.
+  % \item[2004-now] dozens of \textbf{unsupervised} models that can be
+  %   \textbf{tweaked} e.g. GLAD, DNAcopy, fused lasso, cghseg, PELT.
+  \item[2009-2010] \textbf{No model $f$}! Breakpoint labels recorded
+    by typing 0/1 in Excel spreadsheets (Janoueix-Lerosey,
+    Schleiermacher, \textit{et al.} J Clinical Oncology).
+  \item[2013] \textbf{Non-interactive, supervised} analysis.
+    \\(Hocking \textit{et al.}, BMC Bioinformatics).
+  \item[2014] \textbf{Interactive, supervised} analysis using SegAnnDB
+    (Hocking \textit{et al.} Bioinformatics).
   \end{description}
 \end{frame}
 
