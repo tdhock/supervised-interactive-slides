@@ -3,25 +3,25 @@ Supervised, interactive genomic data analysis
 This slide deck is a summary of my contributions to supervised and
 interactive data analysis in the past few years (2011-2014).
 
-The most interesting parts are the xypics that clearly show the
+The most interesting parts are the new xypics that clearly show the
 differences between supervised (plot before modeling) and unsupervised
 analysis (plot after modeling).
 
 The other main contribution is the 2 x 2 table that classifies
 the types of analysis methods:
 
-| Evaluation:         | qualitative               | quantitative                   |
-| Input: data $x$ +   | parameters                | labels $y$                     |
-|                     |                           |                                |
-|                     | unsupervised              | supervised                     |
-|---------------------+---------------------------+--------------------------------|
-| *non-interactive*   | default parameters        | trained parmeters              |
-| (fit one model)     |                           |                                |
-|                     |                           |                                |
-|---------------------+---------------------------+--------------------------------|
-| *interactive*       | manually tuned parameters | iteratively trained parameters |
-| (plot/update model) |                           | SegAnnDB                       |
-|                     |                           |                                |
+| Evaluation:         | qualitative               | quantitative                        |
+| Input: data $x$ +   | parameters                | labels $y$                          |
+|                     |                           |                                     |
+|                     | unsupervised              | supervised                          |
+|---------------------+---------------------------+-------------------------------------|
+| *non-interactive*   | default parameters        | trained parameters                  |
+| (fit one model)     | plot $x$                  | plot $x, y$                         |
+|                     | e.g. [[http://onlinelibrary.wiley.com/doi/10.1111/j.1541-0420.2006.00662.x/full][cghseg + mBIC]]        | e.g. [[http://jmlr.org/proceedings/papers/v28/hocking13.html'][Max Margin interval regression]] |
+|---------------------+---------------------------+-------------------------------------|
+| *interactive*       | manually tuned parameters | iteratively trained parameters      |
+| (plot/update model) | plot $x, f(x, \lambda)$   | plot $x, y, f(x, \lambda)$          |
+|                     | e.g. [[http://compbio.med.harvard.edu/CGHweb/][CGHweb]]               | e.g. [[http://bioinformatics.oxfordjournals.org/content/30/11/1539][SegAnnDB]]                       |
 
 
 (original version first appeared https://bitbucket.org/tdhock/intro-slides/src)
