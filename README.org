@@ -10,23 +10,25 @@ analysis (plot after modeling).
 The other main contribution is the 2 x 2 table that classifies
 the types of analysis methods:
 
-| Evaluation:         | qualitative  | quantitative |
-| Input: data $x$ +   | parameters   | labels $y$   |
-|                     |              |              |
-|                     | unsupervised | supervised   |
-|---------------------+--------------+--------------|
-| non-interactive     |              |              |
-| (fit one model)     |              |              |
-|---------------------+--------------+--------------|
-| interactive         |              |              |
-| (plot/update model) |              |              |
-|---------------------+--------------+--------------|
+| Evaluation:         | qualitative               | quantitative                   |
+| Input: data $x$ +   | parameters                | labels $y$                     |
+|                     |                           |                                |
+|                     | unsupervised              | supervised                     |
+|---------------------+---------------------------+--------------------------------|
+| *non-interactive*   | default parameters        | trained parmeters              |
+| (fit one model)     |                           |                                |
+|                     |                           |                                |
+|---------------------+---------------------------+--------------------------------|
+| *interactive*       | manually tuned parameters | iteratively trained parameters |
+| (plot/update model) |                           | SegAnnDB                       |
+|                     |                           |                                |
+
 
 (original version first appeared https://bitbucket.org/tdhock/intro-slides/src)
 
 Finally, to get the R source code and data for the result
 figures/tables, you have to look at my original papers:
-- BMC Bioinformatics 2013. Learning smoothing models... [[http://cran.r-project.org/web/packages/bams/vignettes/redoing-the-article.pdf][check the bams package on CRAN]]
-- ICML 2013. [[https://gforge.inria.fr/scm/viewvc.php/pruned-dp/article/?root%3Dbreakpoints][Learning sparse penalties]].
-- Bioinformatics 2014. [[https://gforge.inria.fr/scm/viewvc.php/webapp/applications-note/?root%3Dbreakpoints][SegAnnDB]].
-- NIPS workshop on machine learning in computational biology 2014. [[https://github.com/tdhock/PeakSegDP-NIPS][PeakSeg]].
+- [[http://www.biomedcentral.com/1471-2105/14/164][BMC Bioinformatics 2013 paper]]. [[http://cran.r-project.org/web/packages/bams/vignettes/redoing-the-article.pdf][Code for "Learning smoothing models..." paper in bams package on CRAN]]
+- [[http://jmlr.org/proceedings/papers/v28/hocking13.html][ICML 2013 paper]]. [[https://gforge.inria.fr/scm/viewvc.php/pruned-dp/article/?root%3Dbreakpoints][Code for "Learning sparse penalties..." paper]].
+- [[http://bioinformatics.oxfordjournals.org/content/30/11/1539][Bioinformatics 2014 paper]]. [[https://gforge.inria.fr/scm/viewvc.php/webapp/applications-note/?root%3Dbreakpoints][Code for SegAnnDB paper]].
+- PeakSeg, NIPS workshop on machine learning in computational biology 2014. [[https://github.com/tdhock/PeakSegDP-NIPS][Code]] for [[https://github.com/tdhock/PeakSegDP-NIPS/blob/master/HOCKING-RIGAILL-PeakSegDP-NIPS-poster.pdf?raw%3Dtrue][poster]] and [[https://github.com/tdhock/PeakSegDP-NIPS/blob/master/HOCKING-RIGAILL-chip-seq-NIPS.pdf?raw%3Dtrue][4-page paper]].
