@@ -4,8 +4,8 @@ This slide deck is a summary of my contributions to supervised and
 interactive data analysis in the past few years (2011-2014).
 
 The most interesting parts are the new xypics that clearly show the
-differences between supervised (plot before modeling) and unsupervised
-analysis (plot after modeling).
+differences between supervised (with labels, plot before modeling) and
+unsupervised analysis (no labels, plot after modeling).
 
 The other main contribution is the 2 x 2 table that classifies
 the types of analysis methods:
