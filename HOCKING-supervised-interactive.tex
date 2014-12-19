@@ -475,7 +475,7 @@ Cancer cell with many copy number alterations.
   \end{itemize}
 \end{frame}
 
-\begin{frame}
+\begin{frame}[fragile]
   \frametitle{Supervised, non-interactive DNA copy number analysis}
 
   \includegraphics[width=\textwidth]{regions-axes-full}
@@ -487,17 +487,49 @@ Cancer cell with many copy number alterations.
 
   \sout{\textbf{Question:}\\
     where are the true changes in copy number? (breakpoints)}
-  \\
-  ``All models are wrong, but some are useful.'' page 424, \textit{Empirical
-    Model-Building and Response Surfaces}, Box and Draper (1987).
+
+  % ``All models are wrong, but some are useful.'' page 424, \textit{Empirical
+  %   Model-Building and Response Surfaces}, Box and Draper (1987).
+  \includegraphics{Box-Draper-all-models-are-wrong-but-some-are-useful-hilite}
 
   \vskip 0.1in
+
+  Page 424, \textit{Empirical
+    Model-Building and Response Surfaces}, Box and Draper (1987).
+
+  % \textbf{Train question:} can we fit a model $f(\mathbf x, \lambda)$
+  % to the labels $\mathbf y?$
+  % \\
+  % \textbf{Test question:} does the fitted model $f(\mathbf x^*, \lambda)$
+  % have good predictions for test data $\mathbf x^*$ and labels $\mathbf y^*$?
+
+  \vskip 10in
+
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Supervised, non-interactive DNA copy number analysis}
+
+  \includegraphics[width=\textwidth]{regions-axes-full}
+
+  Analyst sees a vector of $d$ noisy data points $\mathbf x\in\RR^d$,\\
+  and some manually annotated region labels $\mathbf y$.
+
+  \vskip 0.1in
+
+  \sout{\textbf{Question:}\\
+    where are the true changes in copy number? (breakpoints)}
+
+  \vskip 0.5cm
 
   \textbf{Train question:} can we fit a model $f(\mathbf x, \lambda)$
   to the labels $\mathbf y?$
   \\
   \textbf{Test question:} does the fitted model $f(\mathbf x^*, \lambda)$
   have good predictions for test data $\mathbf x^*$ and labels $\mathbf y^*$?
+
+  \vskip 10in
+
 \end{frame}
 
 \begin{frame}

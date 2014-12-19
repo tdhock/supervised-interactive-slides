@@ -18,6 +18,7 @@ the types of analysis methods:
 | *non-interactive*   | default parameters        | trained parameters                  |
 | (fit one model)     | plot $x$                  | plot $x, y$                         |
 |                     | e.g. [[http://onlinelibrary.wiley.com/doi/10.1111/j.1541-0420.2006.00662.x/full][cghseg + mBIC]]        | e.g. [[http://jmlr.org/proceedings/papers/v28/hocking13.html'][Max Margin interval regression]] |
+|                     |                           |                                     |
 |---------------------+---------------------------+-------------------------------------|
 | *interactive*       | manually tuned parameters | iteratively trained parameters      |
 | (plot/update model) | plot $x, f(x, \lambda)$   | plot $x, y, f(x, \lambda)$          |
