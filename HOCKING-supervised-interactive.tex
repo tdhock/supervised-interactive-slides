@@ -347,18 +347,20 @@ Cancer cell with many copy number alterations.
   \frametitle{Summary of unsupervised models, software}
 
   \begin{center}
-  \begin{tabular}{c|c|c|c}
+  \begin{tabular}{c|c|c}
     Evaluation: & qualitative &  \\
-    Input: data + & parameters & & \\
+    Input: profile $\mathbf x$ + & parameters $\lambda$ &  \\
         & \textbf{unsupervised} & \\
     \hline
     \textbf{non-interactive}
+    & plot $\mathbf x$\\
     & default parameters &  \\
-    & e.g. DNAcopy & \\
+    & e.g. DNAcopy \\
     \hline
     \textbf{interactive}
-    & tuned parameters & \mbox{\hskip 1in} & \\
-    & e.g. CGHweb & 
+    & plot $\mathbf x, f(\mathbf x, \lambda)$\\
+    & tuned parameters & \\
+    & e.g. CGHweb  
   \end{tabular}
   \end{center}
 
@@ -400,9 +402,12 @@ Cancer cell with many copy number alterations.
   % \item \textbf{What if we use a different model $g(\mathbf x, \rho)$ where
   %   the learned $\lambda$ is meaningless?
   \item Use default parameter $\lambda$ for all profiles?
-  \item If we know a good parameter $\lambda_1=8$ for one profile, how
+  \item If we know a good parameter $\lambda_1=8$ for one profile, 
     does that help us choose a parameter $\lambda_2, \lambda_3$ for
     other profiles?
+  \item How does knowledge that $\lambda_1=8$ is good help us train
+    another model $g(\mathbf x, \rho)$ with a different parameter
+    $\rho$?
   \end{itemize}
   \textbf{Testing different models of the same data?} 
     \begin{itemize}
@@ -439,7 +444,7 @@ Cancer cell with many copy number alterations.
     \textbf{Breakpoint}\\
  \textbf{detector} & \textbf{strong point} & \textbf{weak point} \\
     \hline
-    mathematical  & maximum likelihood & tuning parameters \\
+    mathematical  & maximum likelihood & tuning parameters $\lambda$ \\
     models & algorithm finds exact  & chosen using\\
 & breakpoint locations  & unrealistic assumptions\\
     \hline
@@ -500,7 +505,9 @@ Cancer cell with many copy number alterations.
   number profiles using breakpoint annotations, BMC Bioinfo
   (2013).
 
-  \includegraphics[width=0.8\textwidth]{bams-smoothing}
+  \begin{center}
+      \includegraphics[width=0.7\textwidth]{bams-smoothing}
+  \end{center}
 
   Find the best parameter $\lambda$ for $n=6$ profiles $\mathbf x_i$
   with labels $\mathbf y_i$:
@@ -508,11 +515,13 @@ Cancer cell with many copy number alterations.
   \begin{equation*}
     \hat \lambda = \argmin_{\lambda}
     \sum_{i=1}^n
-    E\left[
+    E\big[
       \mathbf y_i,
       f(\mathbf x_i, \lambda)
-    \right].
+    \big].
   \end{equation*}
+
+  $E$ is zero-one loss (number of incorrect regions).
 
 \end{frame}
 
@@ -520,18 +529,22 @@ Cancer cell with many copy number alterations.
 \begin{frame}
   \frametitle{Ranking breakpoint detectors by test error}
 
-  Benchmark data set: two different manual annotation/label sets
-  $\mathbf y_i$ for profiles~$\mathbf x_i$ from 575 neuroblastoma
-  patients\\
-  (R package \texttt{neuroblastoma}).
+  Benchmark data set, R package \texttt{neuroblastoma}:
+  profiles~$\mathbf x_i$ from 575 neuroblastoma patients, two
+  different sets of labels $\mathbf y_i$:
+  \begin{description}
+  \item[Original] 3418 manually annotated regions (type 0/1 in Excel).
+  \item[Detailed] 4359 manually annotated regions (custom GUI).
+  \end{description}
 
   \begin{center}
       \includegraphics[width=0.8\textwidth]{bams-test-error}
   \end{center}
 
-  Local model = choose best $\lambda_i$ for each profile $i$.\\
-  Global model = choose best $\lambda$ overall.
-
+  \begin{description}
+  \item[Local model] choose best scalar $\lambda_i$ for each profile $i$.\\
+  \item[Global model] choose best scalar $\lambda$ overall.
+  \end{description}
 \end{frame}
 
 \begin{frame}
@@ -588,25 +601,29 @@ Cancer cell with many copy number alterations.
 \end{frame}
 
 \begin{frame}
-  \frametitle{Some problems solved by supervised analysis}
+  \frametitle{Supervised analysis solves problems, facilitates
+    collaboration}
   \textbf{Training a model that works on many samples and genomic
     regions?} 
   \begin{itemize}
+  \item Biologist labels $n$ profiles, making a benchmark data set.
   \item Quantitative model training using labels $\mathbf y_i$:
   \begin{equation*}
     \hat \lambda = \argmin_{\lambda}
     \sum_{i=1}^n
-    E\left[
+    E\big[
       \mathbf y_i,
       f(\mathbf x_i, \lambda)
-    \right].
+    \big].
   \end{equation*}
+  \item Biologist gets most accurate model $f$ to use on other profiles.
   \end{itemize}
   \textbf{Testing different models of the same data?} 
   \begin{itemize}
-  \item Quantitative model evaluation using labels $\mathbf y_i$.
+  \item Statistician can quantitatively evaluate algorithms using
+    zero-one loss $E$ on benchmark data sets.
   \end{itemize}
-  But where do the labels $\mathbf y_i$ come from?
+  But how to make labels $\mathbf y_i$?
 \end{frame}
 
 \begin{frame}
@@ -617,8 +634,11 @@ Cancer cell with many copy number alterations.
   \begin{center}
 \includegraphics[width=\textwidth]{new-new-annotations}
   \end{center}
-\vskip 0.2in
-Public SegAnnDB server: \url{http://bioviz.rocq.inria.fr/}
+  Analyst sees profile $\mathbf x_i$, model $f(\mathbf x_i, \lambda)$,
+  and labels $\mathbf \mathbf y_i$ (editable).
+
+  \vskip 0.1in Public SegAnnDB
+  server: \url{http://bioviz.rocq.inria.fr/}
 
 \vskip 0.1in
 Private server for McGill data sets:
@@ -852,30 +872,40 @@ Private server for McGill data sets:
 \end{frame}
 
 \begin{frame}
-  \frametitle{A brief history of supervised DNA copy number analysis}
+  \frametitle{Summary of contributions to
+    DNA copy number analysis}
   \begin{center}
-      \begin{tabular}{c|c|c|c}
-    Evaluation: & qualitative & quantitative \\
-    Input: data + & parameters & annotated regions \\
-    & \textbf{unsupervised} & \textbf{supervised} \\
+  \begin{tabular}{c|c|c}
+    Evaluation: & qualitative &  quantitative \\
+    Input: profile $\mathbf x$ + & parameters $\lambda$ & labels $\mathbf y$ \\
+        & \textbf{unsupervised} & \textbf{supervised}\\
     \hline
- \textbf{non-interactive}    & default parameters & &\\
-    & e.g. DNAcopy & MMIR \\
+    \textbf{non-interactive}
+    & plot $\mathbf x$ & plot $\mathbf x, \mathbf y$\\
+    & default parameters $\lambda$ & trained parameters $\lambda$ \\
+    & e.g. DNAcopy & BMC'13, ICML'13\\
     \hline
- \textbf{interactive}    & tuned parameters &  \\
-    & e.g. CGHweb & SegAnnDB
+    \textbf{interactive}
+    & plot $\mathbf x, f(\mathbf x, \lambda)$ 
+    & plot $\mathbf x, \mathbf y, f(\mathbf x, \lambda)$\\
+    & manually tuned $\lambda$ & iterative $\lambda$ training\\
+    & e.g. CGHweb  & Bioinfo'14
   \end{tabular}
   \end{center}
   \begin{description}
   % \item[2004-now] dozens of \textbf{unsupervised} models that can be
   %   \textbf{tweaked} e.g. GLAD, DNAcopy, fused lasso, cghseg, PELT.
-  \item[2009-2010] \textbf{No model $f$}! Breakpoint labels recorded
-    by typing 0/1 in Excel spreadsheets (Janoueix-Lerosey,
-    Schleiermacher, \textit{et al.} J Clinical Oncology).
-  \item[2013] \textbf{Non-interactive, supervised} analysis.
-    \\(Hocking \textit{et al.}, BMC Bioinformatics).
-  \item[2014] \textbf{Interactive, supervised} analysis using SegAnnDB
-    (Hocking \textit{et al.} Bioinformatics).
+  % \item[2009-2010] \textbf{No model $f$}! Breakpoint labels recorded
+  %   by typing 0/1 in Excel spreadsheets (Janoueix-Lerosey,
+  %   Schleiermacher, \textit{et al.} J Clinical Oncology).
+  \item[BMC'13] \textbf{Non-interactive, supervised, single-parameter}.
+    Learning smoothing models of copy number profiles... 
+    BMC Bioinformatics, Hocking \textit{et al}.
+  \item[ICML'13] \textbf{Non-interactive, supervised,
+      multi-parameter}.  
+    Learning sparse penalties... Hocking \textit{et al}.
+  \item[Bioinfo'14] \textbf{Interactive, supervised, multi-parameter}.
+    SegAnnDB..., Bioinformatics, Hocking \textit{et al}.
   \end{description}
 \end{frame}
 
