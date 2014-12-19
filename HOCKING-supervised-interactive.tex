@@ -553,7 +553,8 @@ Cancer cell with many copy number alterations.
 \end{frame}
 
 \begin{frame}
-  \frametitle{Supervised, non-interactive DNA copy number analysis}
+  \frametitle{Unsupervised, non-interactive DNA copy number analysis}
+  Same as before: unsupervised, non-interactive.
   \begin{displaymath}
   \xymatrix{
     \text{Data $\mathbf x$}
@@ -578,6 +579,8 @@ Cancer cell with many copy number alterations.
 
 \begin{frame}
   \frametitle{Supervised, non-interactive DNA copy number analysis}
+  Plot data $\mathbf x$, make labels $\mathbf y$, use to train
+  parameter $\lambda$.
   \begin{displaymath}
   \xymatrix{
     \text{Data $\mathbf x$}
@@ -598,6 +601,69 @@ Cancer cell with many copy number alterations.
     & \text{ }
   }
   \end{displaymath}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Supervised analysis uses labels for parameter training}
+
+    \textbf{Unsupervised (interactive).}
+  \begin{displaymath}
+    \small
+  \xymatrix@=0.3cm{
+    \text{Data $\mathbf x$}
+    \ar `[r] [dr] 
+    \ar `r[rr] [drr] 
+    \ar `r[rrr] [drrr] 
+    %\ar [d]
+    & \text{ }
+    & \text{ }
+    & \text{ }
+    \\
+    %\text{Plot} 
+    %\ar [d]
+    & 
+    \text{Model $f(\mathbf x, \lambda_1)$} 
+    \ar [r]
+    & 
+    \alert<2>{\text{Plot}}
+    \ar[d]
+    &
+    \text{Model $f(\mathbf x, \lambda_2)$} 
+    \\
+    \text{Parameter $\lambda_1$}
+    \ar `r[ru] [ru]
+    \ar [rr]
+    & \text{ }
+    & \alert<2>{\text{Parameter $\lambda_2$}}
+    \ar `r[ru] [ru] \\
+    & &   \alert<2>{\text{Plot after modeling.}}
+  }
+  \end{displaymath}
+  
+  \textbf{Supervised (non-interactive).}
+  \begin{displaymath}
+    \small
+  \xymatrix@=0.3cm{
+    \text{Data $\mathbf x$}
+    \ar `[r] [dr] 
+    \ar [d]
+    & \text{ }
+    \\
+    \alert<2>{\text{Plot} }
+    \ar [d]
+    & 
+    \text{Model $f(\mathbf x, \lambda)$} 
+    \\
+    \alert<2>{\text{Labels $\mathbf y$}       }
+    \ar [d]
+    \\
+    \alert<2>{\text{Parameter $\lambda$} }
+    \ar `r[ruu] [ruu]
+    & \text{ }\\
+    \alert<2>{\text{Plot before modeling.}}
+  }
+\end{displaymath}
+
 \end{frame}
 
 \begin{frame}
@@ -882,12 +948,14 @@ Private server for McGill data sets:
     \hline
     \textbf{non-interactive}
     & plot $\mathbf x$ & plot $\mathbf x, \mathbf y$\\
+    fit one model
     & default parameters $\lambda$ & trained parameters $\lambda$ \\
     & e.g. DNAcopy & BMC'13, ICML'13\\
     \hline
     \textbf{interactive}
     & plot $\mathbf x, f(\mathbf x, \lambda)$ 
     & plot $\mathbf x, \mathbf y, f(\mathbf x, \lambda)$\\
+    plot, update model 
     & manually tuned $\lambda$ & iterative $\lambda$ training\\
     & e.g. CGHweb  & Bioinfo'14
   \end{tabular}
