@@ -354,11 +354,13 @@ Cancer cell with many copy number alterations.
     \hline
     \textbf{non-interactive}
     & plot $\mathbf x$\\
+    fit one model 
     & default parameters &  \\
     & e.g. DNAcopy \\
     \hline
     \textbf{interactive}
     & plot $\mathbf x, f(\mathbf x, \lambda)$\\
+    plot, update model 
     & tuned parameters & \\
     & e.g. CGHweb  
   \end{tabular}
@@ -370,7 +372,7 @@ Cancer cell with many copy number alterations.
 
 \begin{frame}
   \frametitle{Unsupervised, interactive DNA copy number analysis\\
-  with several profiles}
+  with 3 profiles (in practice we have 1000s)}
   \includegraphics[width=\textwidth]{unlabeled-breakpoints-8}
 
   Parameter $\lambda_1$ = 8 breakpoints.
@@ -695,8 +697,8 @@ Cancer cell with many copy number alterations.
 \begin{frame}
   \frametitle{Supervised, interactive copy number analysis}
 
-  SegAnnDB: interactive web-based genomic segmentation\\
-  (Hocking et al. Bioinformatics 2014).
+  Hocking \textit{et al}. SegAnnDB: interactive web-based genomic
+  segmentation. Bioinformatics (2014).
   \begin{center}
 \includegraphics[width=\textwidth]{new-new-annotations}
   \end{center}
@@ -707,19 +709,15 @@ Cancer cell with many copy number alterations.
   server: \url{http://bioviz.rocq.inria.fr/}
 
 \vskip 0.1in
-Private server for McGill data sets:
+Demo: private server for McGill data sets.
 \small
 \url{http://ec2-54-201-171-12.us-west-2.compute.amazonaws.com/}
 
 \end{frame}
 
 \begin{frame}
-  \frametitle{error decreases as profiles are labeled}
-  TODO add fig
-\end{frame}
-
-\begin{frame}
   \frametitle{Supervised, interactive genomic segmentation}
+  First step same as supervised, non-interactive model.
   \small
   \begin{displaymath}
   \xymatrix{
@@ -764,6 +762,7 @@ Private server for McGill data sets:
 
 \begin{frame}
   \frametitle{Supervised, interactive genomic segmentation}
+  Plot data, model, and labels.
   \small
   \begin{displaymath}
   \xymatrix{
@@ -808,6 +807,7 @@ Private server for McGill data sets:
 
 \begin{frame}
   \frametitle{Supervised, interactive genomic segmentation}
+  Add/delete labels based on plotted signal/noise.
   \small
   \begin{displaymath}
   \xymatrix{
@@ -852,6 +852,7 @@ Private server for McGill data sets:
 
 \begin{frame}
   \frametitle{Supervised, interactive genomic segmentation}
+  Compute a better parameter.
   \small
   \begin{displaymath}
   \xymatrix{
@@ -896,6 +897,7 @@ Private server for McGill data sets:
 
 \begin{frame}
   \frametitle{Supervised, interactive genomic segmentation}
+  Compute a better model.
   \small
   \begin{displaymath}
   \xymatrix{
@@ -935,6 +937,15 @@ Private server for McGill data sets:
     \ar `r[ruu] [ruu]
   }
   \end{displaymath}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Test error decreases as profiles are labeled}
+  Hocking \textit{et al}. SegAnnDB: interactive web-based genomic
+  segmentation. Bioinformatics (2014).
+  \begin{center}
+    \input{figure-test-error-decreases}
+  \end{center}
 \end{frame}
 
 \begin{frame}
