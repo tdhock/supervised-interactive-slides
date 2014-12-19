@@ -1,0 +1,32 @@
+Supervised, interactive genomic data analysis
+
+This slide deck is a summary of my contributions to supervised and
+interactive data analysis in the past few years (2011-2014).
+
+The most interesting parts are the xypics that clearly show the
+differences between supervised (plot before modeling) and unsupervised
+analysis (plot after modeling).
+
+The other main contribution is the 2 x 2 table that classifies
+the types of analysis methods:
+
+| Evaluation:         | qualitative  | quantitative |
+| Input: data $x$ +   | parameters   | labels $y$   |
+|                     |              |              |
+|                     | unsupervised | supervised   |
+|---------------------+--------------+--------------|
+| non-interactive     |              |              |
+| (fit one model)     |              |              |
+|---------------------+--------------+--------------|
+| interactive         |              |              |
+| (plot/update model) |              |              |
+|---------------------+--------------+--------------|
+
+(original version first appeared https://bitbucket.org/tdhock/intro-slides/src)
+
+Finally, to get the R source code and data for the result
+figures/tables, you have to look at my original papers:
+- BMC Bioinformatics 2013. Learning smoothing models... [[http://cran.r-project.org/web/packages/bams/vignettes/redoing-the-article.pdf][check the bams package on CRAN]]
+- ICML 2013. [[https://gforge.inria.fr/scm/viewvc.php/pruned-dp/article/?root%3Dbreakpoints][Learning sparse penalties]].
+- Bioinformatics 2014. [[https://gforge.inria.fr/scm/viewvc.php/webapp/applications-note/?root%3Dbreakpoints][SegAnnDB]].
+- NIPS workshop on machine learning in computational biology 2014. [[https://github.com/tdhock/PeakSegDP-NIPS][PeakSeg]].
