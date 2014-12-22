@@ -348,9 +348,9 @@ Cancer cell with many copy number alterations.
 
   \begin{center}
   \begin{tabular}{c|c|c}
+        & \textbf{unsupervised} & \\
     Evaluation: & qualitative &  \\
     Input: profile $\mathbf x$ + & parameters $\lambda$ &  \\
-        & \textbf{unsupervised} & \\
     \hline
     \textbf{non-interactive}
     & plot $\mathbf x$\\
@@ -1027,9 +1027,9 @@ Demo: private server for McGill data sets.
     DNA copy number analysis}
   \begin{center}
   \begin{tabular}{c|c|c}
+    & \textbf{unsupervised} & \textbf{supervised}\\
     Evaluation: & qualitative &  quantitative \\
     Input: profile $\mathbf x$ + & parameters $\lambda$ & labels $\mathbf y$ \\
-        & \textbf{unsupervised} & \textbf{supervised}\\
     \hline
     \textbf{non-interactive}
     & plot $\mathbf x$ & plot $\mathbf x, \mathbf y$\\
@@ -1119,7 +1119,7 @@ Demo: private server for McGill data sets.
   [--broad-cutoff BROADCUTOFF] [--call-summits]
 \end{verbatim}
 10 parameters for Histone modifications in cancer (HMCan),
-Ashoor et al, 2013.
+Ashoor et al, 2013. 
 \begin{verbatim}
 minLength 145
 medLength 150
@@ -1132,7 +1132,90 @@ iterationThreshold 5
 finalThreshold 0
 maxIter 20
 \end{verbatim}
+Not feasible to use grid search in 10 dimensions ($3^{10} = 59,049$).
 \end{frame}
+
+\begin{frame}
+  \frametitle{Unsupervised, non-interactive ChIP-seq data analysis}
+
+  Existing ChIP-seq peak detectors.
+  \begin{displaymath}
+  \xymatrix{
+    \text{Data $\mathbf x$}
+    \ar `[r] [dr] 
+    %\ar [d]
+    & \text{ }
+    \\
+    \color{white}{\text{Plot} }
+    %\ar [d]
+    & 
+    \text{Model $f(\mathbf x, \lambda)$} 
+    \\
+    \color{white}{\text{Labels $\mathbf y$}       }
+    %\ar [d]
+    \\
+    \text{Parameter $\lambda$} 
+    \ar `r[ruu] [ruu]
+    & \text{ }
+  }
+  \end{displaymath}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Supervised, non-interactive ChIP-seq data analysis}
+  Plot ChIP-seq profile $\mathbf x$, make labels $\mathbf y$, use to
+  train parameter $\lambda$.
+  \begin{displaymath}
+  \xymatrix{
+    \text{Data $\mathbf x$}
+    \ar `[r] [dr] 
+    \ar [d]
+    & \text{ }
+    \\
+    \text{Plot} 
+    \ar [d]
+    & 
+    \text{Model $f(\mathbf x, \lambda)$} 
+    \\
+    \text{Labels $\mathbf y$}       
+    \ar [d]
+    \\
+    \text{Parameter $\lambda$} 
+    \ar `r[ruu] [ruu]
+    & \text{ }
+  }
+  \end{displaymath}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Peak H3K4me3 profiles with manually annotated regions}
+  \includegraphics[width=\textwidth]{figure-macs-default-4samples-just-regions}
+
+  Determined by visual inspection on
+  \href{http://ucscbrowser.genap.ca/cgi-bin/hgTracks?db=hg19\&position=chr11:118080000-118130000}{ucscbrowser.genap.ca}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Peak H3K4me3 profiles, macs default model}
+  \includegraphics[width=\textwidth]{figure-macs-default-4samples-with-peaks}
+
+  How many errors?
+\end{frame}
+
+\begin{frame}
+  \frametitle{Peak H3K4me3 profiles, macs default model}
+  \includegraphics[width=\textwidth]{figure-macs-default-4samples}
+
+  3 false positives, 2 false negatives.
+\end{frame}
+
+\begin{frame}
+  \frametitle{Peak H3K4me3 profiles, macs trained model}
+  \includegraphics[width=\textwidth]{figure-macs-4samples}
+
+  1 false positive, 3 false negatives.
+\end{frame}
+
 
 \begin{frame}
   \frametitle{Benchmark: 7 manually labeled ChIP-seq data sets}
@@ -1150,9 +1233,79 @@ maxIter 20
 \end{frame}
 
 \begin{frame}
-  \frametitle{A brief history of supervised ChIP-seq peak detection}
+  \frametitle{ROC curves for train error of unsupervised models}
+    Reference: Hocking \textit{et al.} Visual annotations and a
+  supervised learning approach for evaluating and calibrating ChIP-seq
+  peak detectors (arXiv:1409.6209).
+
+  \includegraphics[width=0.9\textwidth]{figure-roc}
+
+  % Rye \textit{et al.} 2011 also observed many false positives:
+  % ``$>80\%$ of these peaks could be manually filtered out by visual
+  % inspection alone, without using additional background data''
+
+  Can we do better with supervised learning?
+\end{frame}
+
+\begin{frame}
+  \frametitle{PeakSeg: state-of-the-art peak detection accuracy for
+    both sharp H3K4me3 and broad H3K36me3 profiles}
+  Reference: Hocking \textit{et al.} PeakSeg: peak detection via
+  constrained optimal segmentation. NIPS 2014 workshop on machine
+  learning in computational biology.
+
+  \vskip 0.1cm
+
+  Two main ideas: 
+
+  \begin{itemize}
+  \item Optimal segmentation: search for the best peaks, out of
+    \alert<2>{all possible} peak start/end locations.\\
+    (for example, no fixed bin size)
+  \item Supervised learning: max-margin interval regression learns a
+    \alert<2>{multi-parameter} penalty function using the labels
+    $\mathbf y$ and
+    gradient descent (Rigaill \textit{et al.} ICML 2013).\\
+    (vs intractable grid search in unsupervised algorithms)
+  \end{itemize}
+  
+\end{frame}
+
+\begin{frame}
+  \frametitle{Test error of 3 peak detectors on 6 sharp profiles}
+  \includegraphics[width=\textwidth]{figure-dp-peaks-train-2}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Test error of 3 peak detectors on 6 broad profiles}
+  \includegraphics[width=\textwidth]{figure-dp-peaks-train-1}
+\end{frame}
+
+\begin{frame}
+  \frametitle{State-of-the-art peak detection on both sharp H3K4me3
+    and broad H3K36me3 data sets}
+  Interactive version with test ROC curves:
+
+  \small
+
+  \url{http://cbio.ensmp.fr/~thocking/figure-dp-peaks-interactive}
+
+  \includegraphics[width=\textwidth]{figure-dp-peaks-regression-dots}
+
+  Caveats: 
+  \begin{itemize}
+  \item With few training labels $\mathbf y$ (H3K36me3\_TDH data),\\
+    PeakSeg sometimes less accurate than hmcan.broad.
+  \item Current implementation slow for whole genome\\
+    (several days vs several hours for macs).
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Summary of past and future work in supervised ChIP-seq
+    peak detection}
   \begin{description}
-  \item[2011] \textbf{Model evaluation.}\\
+  \item[2011] \textbf{Unsupervised training, labels for testing.}\\
     Rye et al. Manually labeled binding sites and visual
     peaks for 3
     transcription factors.
@@ -1170,35 +1323,38 @@ maxIter 20
   \frametitle{Advantages of supervised learning}
   Creating data sets $\mathbf x$ with labels $\mathbf y$ is important for
   \begin{description}
-  \item[short-term] quantitative evaluation, more convincing papers.
+  \item[short-term] quantitative evaluation, big data sets.
   \item[long-term] cross-discipline collaboration!
     \begin{description}
     \item[statisticians/modelers] get better evaluation
     metrics.
     \item[biologists/annotators] get
-    better models.
+    better models of big data.
     \end{description}
   \end{description}
 
   Can we make labels/supervised approaches for...
   \begin{description}
-  \item[segmentation] breakpoint/copy number regions (this work).
+  \item[segmentation] breakpoint/copy number/peaks (this work).
   \item[clustering] pairs that should join (or not)?
   \item[regression] variables/genes that are important (or not)?
   \item[diff expression] genes that are up/down (or not)?
   \end{description}
-  Write me at \texttt{toby.hocking@mail.mcgill.ca} to collaborate!
 \end{frame}
 
 \begin{frame}
   \frametitle{Thank you!}
-  Supplementary slides appear after this one.
+  Write me at \alert{\texttt{toby.hocking@mail.mcgill.ca}} to collaborate!
 
   \vskip 1cm
 
   Source code for slides online!\\
   \small
   \url{https://github.com/tdhock/supervised-interactive-slides}
+  \vskip 1cm
+
+  Supplementary slides appear after this one.
+
 \end{frame}
 
 \end{document}
