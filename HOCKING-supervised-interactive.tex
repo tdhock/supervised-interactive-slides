@@ -600,10 +600,14 @@ Cancer cell with many copy number alterations.
 
 \begin{frame}
   \frametitle{Learning a multi-parameter penalty function}
-  \begin{center}
+    \small
+
+  Reference: Rigaill \textit{et al.} Learning sparse penalties for
+  change-point detection using max-margin interval regression, ICML
+  2013.
+
     \input{ireg-max-margin}
 
-    \small
 
     \begin{tabular}{rrrrr}
       \hline
@@ -613,13 +617,12 @@ Cancer cell with many copy number alterations.
       mBIC & unsupervised & $40.99 \pm 0.00$ & $36.88 \pm 0.00$ & $2.25 \pm 0.00$ \\ 
       cghseg.k & 1 & $2.19 \pm 0.82$ & $6.49 \pm 1.16$ & $11.85 \pm 3.52$ \\ 
       log.s.log.d & 3 & $1.90 \pm 0.77$ & $4.72 \pm 0.54$ & $1.50 \pm 1.63$ \\ 
-      L1-reg & 118 &$1.81 \pm 0.58$ & $4.70 \pm 0.88$ & $1.28 \pm 1.47$ \\ 
+      %L1-reg & 118 &$1.81 \pm 0.58$ & $4.70 \pm 0.88$ & $1.28 \pm 1.47$ \\ 
       \hline
     \end{tabular}
 
     Percent incorrect labels/regions (mean $\pm$ sd over 10 test sets).
 
-  \end{center}
 % latex table generated in R 2.15.2 by xtable 1.7-0 package
 % Tue Jan 29 11:58:32 2013
 \end{frame}
@@ -1053,7 +1056,7 @@ Demo: private server for McGill data sets.
     BMC Bioinformatics, Hocking \textit{et al}.
   \item[ICML'13] \textbf{Non-interactive, supervised,
       multi-parameter}.  
-    Learning sparse penalties... Hocking \textit{et al}.
+    Learning sparse penalties... Rigaill \textit{et al}.
   \item[Bioinfo'14] \textbf{Interactive, supervised, multi-parameter}.
     SegAnnDB..., Bioinformatics, Hocking \textit{et al}.
   \end{description}
@@ -1062,25 +1065,105 @@ Demo: private server for McGill data sets.
 \section{Supervised ChIP-seq peak detection}
 
 \begin{frame}
-  \frametitle{A brief history of supervised ChIP-seq peak detection}
-  \begin{description}
-  \item[2011] Rye et al. Manually labeled sites and visual peaks for 3
-    transcription factors.\\
-    \textbf{Model evaluation.}
-  \item[2014] Hocking et al. arXiv:1409.6209. Manually labeled visual
-    peaks for 2 histone marks, 4 different annotators.
-    \\
-    \textbf{Single-parameter model training and evaluation.}\\
-    Hocking et al. PeakSeg. NIPS Computational Biology workshop.\\
-    \textbf{fo}
-  \item[2015] 
-  \end{description}
+  \frametitle{Chromatin immunoprecipitation sequencing (ChIP-seq)}
+  Analysis of DNA-protein interactions.
+
+  \includegraphics[width=\textwidth]{Chromatin_immunoprecipitation_sequencing_wide.png}
+
+  Source: ``ChIP-sequencing,'' Wikipedia.
 \end{frame}
 
 \begin{frame}
-  \frametitle{Two annotators agree on the same profile}
+  \frametitle{Data downloaded from Epigenomes Portal}
+  \includegraphics[width=2.5in]{screenshot-samples}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Problem: find peaks and differences in several
+    samples}
+  \includegraphics[width=\textwidth]{screenshot-ucsc-edited}
+
+  Peaks detected by Model-based analysis of ChIP-Seq (MACS), Zhang et
+  al, 2008.
+\end{frame}
+
+\begin{frame}
+  \frametitle{Existing unsupervised peak detection algorithms}
+  \begin{itemize}
+  \item Model-based analysis of ChIP-Seq (MACS), Zhang et al, 2008.
+  \item SICER, Zang et al, 2009.
+  \item HOMER findPeaks, Heinz et al, 2010.
+  \item RSEG, Song and Smith, 2011.
+  \item Histone modifications in cancer (HMCan), Ashoor et al, 2013.
+  \item ... dozens of others.
+  \end{itemize}
+  Two big questions: how to choose the best...
+  \begin{itemize}
+  \item ...algorithm?
+  \item ...parameters?
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{How to choose model parameters?}
+\scriptsize
+19 parameters for Model-based analysis of ChIP-Seq (MACS), Zhang et al, 2008.
+\begin{verbatim}
+  [-g GSIZE]
+  [-s TSIZE] [--bw BW] [-m MFOLD MFOLD] [--fix-bimodal]
+  [--nomodel] [--extsize EXTSIZE | --shiftsize SHIFTSIZE]
+  [-q QVALUE | -p PVALUE | -F FOLDENRICHMENT] [--to-large]
+  [--down-sample] [--seed SEED] [--nolambda]
+  [--slocal SMALLLOCAL] [--llocal LARGELOCAL]
+  [--shift-control] [--half-ext] [--broad]
+  [--broad-cutoff BROADCUTOFF] [--call-summits]
+\end{verbatim}
+10 parameters for Histone modifications in cancer (HMCan),
+Ashoor et al, 2013.
+\begin{verbatim}
+minLength 145
+medLength 150
+maxLength 155
+smallBinLength 50
+largeBinLength 100000
+pvalueThreshold 0.01
+mergeDistance 200
+iterationThreshold 5
+finalThreshold 0
+maxIter 20
+\end{verbatim}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Benchmark: 7 manually labeled ChIP-seq data sets}
   
   \includegraphics[width=\textwidth]{figure-several-annotators}
+
+  \url{http://cbio.ensmp.fr/~thocking/chip-seq-chunk-db/}
+  \begin{itemize}
+  \item 4 annotators (AM, TDH, PGP, XJ).
+  \item 8 cell types.
+  \item 37 annotated H3K4me3 profiles (sharp peaks).
+  \item 29 annotated H3K36me3 profiles (broadly enriched domains).
+  \item 12,826 annotated regions in total.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{A brief history of supervised ChIP-seq peak detection}
+  \begin{description}
+  \item[2011] \textbf{Model evaluation.}\\
+    Rye et al. Manually labeled binding sites and visual
+    peaks for 3
+    transcription factors.
+  \item[2014] \textbf{Single-parameter model training and evaluation.}\\
+    Hocking et al. arXiv:1409.6209. Manually labeled visual
+    peaks for 2 histone marks, 4 different annotators.\\
+    \textbf{Multi-parameter model training}\\
+    Hocking et al. NIPS Computational Biology workshop.
+    PeakSeg: peak detection via constrained optimal segmentation.
+  \item[2015] Supervised, interactive ChIP-seq peak detection?
+  \end{description}
 \end{frame}
 
 \begin{frame} 
