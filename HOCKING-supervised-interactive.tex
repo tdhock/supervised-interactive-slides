@@ -605,15 +605,15 @@ Cancer cell with many copy number alterations.
 
     \small
 
-    \begin{tabular}{rcrrr}
+    \begin{tabular}{rrrrr}
       \hline
-      model & supervised? & parameters & original & detailed \\ 
+      model & parameters & original & detailed & simulation \\ 
       \hline
-      BIC &  & 0 & $7.99 \pm 0.00$ & $13.64 \pm 0.00$ \\ 
-      mBIC & & 0 & $40.99 \pm 0.00$ & $36.88 \pm 0.00$ \\ 
-      cghseg.k & yes &1 & $2.19 \pm 0.82$ & $6.49 \pm 1.16$ \\ 
-      log.s.log.d & yes &3 & $1.90 \pm 0.77$ & $4.72 \pm 0.54$ \\ 
-      L1-reg & yes & 118 &$1.81 \pm 0.58$ & $4.70 \pm 0.88$ \\ 
+      BIC &  unsupervised & $7.99 \pm 0.00$ & $13.64 \pm 0.00$ & $11.97 \pm 0.00$ \\ 
+      mBIC & unsupervised & $40.99 \pm 0.00$ & $36.88 \pm 0.00$ & $2.25 \pm 0.00$ \\ 
+      cghseg.k & 1 & $2.19 \pm 0.82$ & $6.49 \pm 1.16$ & $11.85 \pm 3.52$ \\ 
+      log.s.log.d & 3 & $1.90 \pm 0.77$ & $4.72 \pm 0.54$ & $1.50 \pm 1.63$ \\ 
+      L1-reg & 118 &$1.81 \pm 0.58$ & $4.70 \pm 0.88$ & $1.28 \pm 1.47$ \\ 
       \hline
     \end{tabular}
 
@@ -1008,6 +1008,7 @@ Demo: private server for McGill data sets.
   }
   \end{displaymath}
 \end{frame}
+
 
 \begin{frame}
   \frametitle{Test error decreases as profiles are labeled}
